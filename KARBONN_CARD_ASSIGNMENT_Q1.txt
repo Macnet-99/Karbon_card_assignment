@@ -10,7 +10,7 @@ FROM
 INNER JOIN
     public.orders AS orders on users.user_id = orders.user_id
 WHERE
-    orders.order_date>=CURRENT_DATE - INTERVAL'30 days'
+    orders.order_date>= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)
 GROUP BY 
      users.user_id, users.username, users.email
 ORDER BY 
@@ -29,7 +29,8 @@ SELECT
 FROM
      public.products AS products
 INNER JOIN 
-      public.order_items AS order_items ON products.product_id= order_items.product_id
+      public.order_items AS order_items ON 
+      products.product_id=order_items.product_id
 GROUP BY
       products.product_id, products.product_name
 ORDER BY
